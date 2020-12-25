@@ -8,29 +8,38 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			name: {
-				type: Sequelize.STRING,
+			title: {
+        type: Sequelize.STRING,
+        allowNull: false,
 			},
 			sinopsis: {
-				type: Sequelize.STRING,
+        type: Sequelize.STRING,
+        allowNull: false,
 			},
 			reparto: {
-				type: Sequelize.STRING,
+        type: Sequelize.STRING,
+        allowNull: false,
 			},
 			director: {
-				type: Sequelize.STRING,
+        type: Sequelize.STRING,
+        allowNull: false,
 			},
 			fechaEstreno: {
-				type: Sequelize.DATE,
+        type: Sequelize.DATE,
+        allowNull: false,
 			},
 			img: {
-				type: Sequelize.STRING,
+        type: Sequelize.STRING,
+        allowNull: false,
 			},
 			slug: {
-				type: Sequelize.STRING,
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
 			},
 			linkTrailer: {
-				type: Sequelize.STRING,
+        type: Sequelize.STRING,
+        allowNull: false,
 			},
 			createdAt: {
 				allowNull: false,
