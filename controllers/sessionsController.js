@@ -40,8 +40,8 @@ module.exports = {
   },
 
   destroy: (req,res)=>{
-    req.session.destroy(()=>{
-        res.redirect('/sessions');
+    req.user.destroy(()=>{
+        res.json({msg: "gracias por usar la app"});
     });
   }
 }
