@@ -10,7 +10,7 @@ module.exports = {
       },
       idMovie: {
         allowNull: false,
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         references: {
           model:'Movies',
           key: 'id',
@@ -20,7 +20,7 @@ module.exports = {
       },
       idGender: {
         allowNull: false,
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         references: {
           model:'Genders',
           key: 'id',
@@ -34,7 +34,7 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type  : Sequelize.DATE
       }
     });
   },

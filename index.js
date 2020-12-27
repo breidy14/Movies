@@ -11,9 +11,11 @@ const secrets = require('./config/secrets').jwtSecret;
 //rutas
 const sessionsRoutes = require('./routes/sessions_routes');
 const userRoutes = require('./routes/users_routes');
+const movieRoutes = require('./routes/movies_routes');
+//const genderRoutes = require('./routes/genders_routes');
 
-app.use(express.json());
-app.use(boyParser.urlencoded({ extended: true }));
+app.use(boyParser.json());
+app.use(boyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 
@@ -26,6 +28,7 @@ let a = {a : 'nombre'}
 
 app.use(sessionsRoutes);
 app.use(userRoutes);
+app.use(movieRoutes);
 
 app.get('/',function(req,res){
   res.json(a);

@@ -10,6 +10,8 @@ module.exports = {
   index: function(req, res){
   },
   create: function(req, res){
+    console.log(req.body);
+    console.log(req.headers);
     let params = paramsBuilder(validParams, req.body)
     
     User.create(params)

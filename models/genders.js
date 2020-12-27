@@ -10,7 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Gender.belongsToMany(models.Movie, {
+        through: 'MovieGenders', 
+        as: 'Movies', 
+        foreignKey:'idMovie',
+        onDelete:'CASCADE',
+        onUpdate: 'CASCADE'
+      })
     }
   };
   Gender.init({
@@ -20,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Genders',
+    modelName: 'Gender',
   });
-  return Genders;
+  return Gender;
 };

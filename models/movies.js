@@ -1,34 +1,42 @@
 'use strict';
 const {  Model } = require('sequelize');
 const slugify = require('../plugins/slugify');
+//const moviegenders = require('./moviegenders');
 
 module.exports = (sequelize, DataTypes) => {
-  class Movies extends Model {
+  class Movie extends Model {
     
-    generateSlugAndContinue(count,next){
+    generateSlugAndContinue(count, next){
       this.slug = slugify(this.title);
       if(count != 0)
           this.slug = this.slug + "-"+count;
   
-      Movies.validateSlugCount(this.slug).then(isValid=>{
+      Movie.validateSlugCount(this.slug).then(isValid=>{
           if(!isValid)
-          return generateSlugAndContinue.call(this,count+1,next);
-          next();
+          return Movie.generateSlugAndContinue.call(this,count+1,next);
+          
+          //next();
       });
     }
 
     static validateSlugCount(slug){
-      return Movies.count({slug: slug}).then(count=>{
+      return Movie.count({where: {slug: slug}}).then(count=>{
         if(count > 0) return false;
         return true;
         });
     }
 
     static associate(models) {
-      // define association here
+      Movie.belongsToMany(models.Gender, {
+        through: 'MovieGenders', 
+        as: 'Genders', 
+        foreignKey:'idGender',
+        onDelete:'CASCADE',
+        onUpdate: 'CASCADE'
+      })
     }
   };
-  Movies.init({
+  Movie.init({
     title: {
       type:DataTypes.STRING,
       allowNull: false
@@ -63,15 +71,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Movies',
+    modelName: 'Movie',
   });
 
-  Movies.beforeCreate(function(next){
-    if (this.slug) return next();
+  Movie.beforeCreate((movie, next)=>{
+    if (movie.slug) return next();
 
-    this.slug = slugify(this.title);
-
+    movie.slug = slugify(movie.title);
+    movie.generateSlugAndContinue.call(movie,0,next);
   })
 
-  return Movies;
+  return Movie;
 };
