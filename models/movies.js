@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Movie.belongsToMany(models.Gender, {
         through: 'MovieGenders', 
-        as: 'Genders', 
+        as: 'genders', 
         foreignKey:'idGender',
         onDelete:'CASCADE',
         onUpdate: 'CASCADE'

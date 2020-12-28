@@ -12,7 +12,7 @@ const secrets = require('./config/secrets').jwtSecret;
 const sessionsRoutes = require('./routes/sessions_routes');
 const userRoutes = require('./routes/users_routes');
 const movieRoutes = require('./routes/movies_routes');
-//const genderRoutes = require('./routes/genders_routes');
+const genderRoutes = require('./routes/genders_routes');
 
 app.use(boyParser.json());
 app.use(boyParser.urlencoded({ extended: false }));
@@ -24,15 +24,10 @@ app.use(
       .unless({path: ['/sessions','/users'], method: ['GET', 'OPTIONS']})
 )
 
-let a = {a : 'nombre'}
-
 app.use(sessionsRoutes);
 app.use(userRoutes);
 app.use(movieRoutes);
-
-app.get('/',function(req,res){
-  res.json(a);
-})
+app.use(genderRoutes);
 
 app.listen(3000, ()=> {
     console.log("Server listo");

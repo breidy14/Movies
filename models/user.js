@@ -50,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     isAdmin: {
       type: DataTypes.BOOLEAN,
       default: false,
+      allowNull: false
     },
     passwordHash: {
       type: DataTypes.STRING,

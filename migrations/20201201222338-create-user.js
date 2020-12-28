@@ -23,7 +23,8 @@ module.exports = {
       },
       isAdmin: {
         type: Sequelize.BOOLEAN,
-        default: false
+        defaultValue: false,
+        allowNull: false
       },
       passwordHash: {
         type: Sequelize.STRING
