@@ -3,11 +3,12 @@ const sessionsController = require('../controllers/sessionsController');
 
 let router = express.Router();
 
-router.route('/sessions')
-.post(sessionsController.create,
+router.route('/signin')
+.post(sessionsController.signin,
   sessionsController.generateToken,
-  sessionsController.sendToken)
-.delete(sessionsController.destroy);
+  sessionsController.sendToken);
+  
+router.route('/logout').delete(sessionsController.logout);
 
 
 module.exports = router;

@@ -8,6 +8,10 @@ const jwtMiddleware = require('express-jwt');
 
 
 const secrets = require('./config/secrets').jwtSecret;
+
+//Middlewares
+//const
+
 //rutas
 const sessionsRoutes = require('./routes/sessions_routes');
 const userRoutes = require('./routes/users_routes');
@@ -21,10 +25,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   jwtMiddleware({secret: secrets, algorithms:['HS256']})
-      .unless({path: ['/sessions','/users'], method: ['GET', 'OPTIONS']})
+      .unless({path: ['/signin','/users'], method: ['GET', 'OPTIONS']})
 )
 
-app.use(sessionsRoutes);
+app.use(sessionsRoutes);//agregar use('api/', sessionsroutes');
 app.use(userRoutes);
 app.use(movieRoutes);
 app.use(genderRoutes);

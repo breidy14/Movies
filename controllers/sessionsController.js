@@ -3,15 +3,13 @@ const jwt = require('jsonwebtoken');
 const secrets = require('../config/secrets').jwtSecret;
 
 module.exports = {
-  create: function(req, res, next){
+  signin: function(req, res, next){
     User.login(req.body.email, req.body.password)
       .then(user => {
-        if (user) {
-          req.user = user;
-          next();
-        }
+        if (!user) next(new Error("Invalid Credentials"));
 
-        next(new Error("Invalid Credentials"));
+        req.user = user;
+        next();
       }).catch(error=>{
         console.log(error);
         res.json(error)
@@ -21,7 +19,9 @@ module.exports = {
   generateToken: function (req,res,next){
     if(!req.user) return next();
 
-    req.token = jwt.sign({id: req.user._id},secrets);
+    req.token = jwt.sign({id: req.user.id},secrets,{
+      expiresIn: 86400
+    });
 
     next();
   },
@@ -29,19 +29,16 @@ module.exports = {
   sendToken: function(req,res){
       if(req.user){
           res.json({
-              user: req.user,
-              jwt: req.token
+              token: req.token
           });
       }else{
-          res.status(422).json({
-              error: 'No se pudo crear el usuario'
-          });
+          res.status(422);
       }
   },
 
-  destroy: (req,res)=>{
+  logout: (req,res)=>{
     req.user.destroy(()=>{
-        res.json({msg: "gracias por usar la app"});
-    });
+        res.status(204);
+    })
   }
 }

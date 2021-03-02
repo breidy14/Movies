@@ -1,15 +1,19 @@
 const express = require('express');
 const moviesController = require('../controllers/moviesController');
 const router = express.Router();
+const auth = require('../middlewares/verifyAuth');
+const authenticateAdmin = require('../middlewares/authenticateAdmin');
 
-router.route('/').get(moviesController.index);
+//const findUser = require('../middlewares/findUser');
+
+//router.route('/').get(moviesController.index);
 
 router.route('/movies')
   .get(moviesController.index)
-  .post(moviesController.create);
+  .post(auth,authenticateAdmin,moviesController.create);
 
 router.route('/movies/:slug')
-  .get(moviesController.find)
-  .delete(moviesController.destroy);
+  .get(auth,authenticateAdmin,moviesController.find)
+  .delete(auth,authenticateAdmin,moviesController.destroy);
 
 module.exports = router;

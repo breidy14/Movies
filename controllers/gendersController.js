@@ -14,7 +14,7 @@ module.exports = {
       Gender.findByPk(genderId.id,{
         include:['movies']
       }).then((gender)=>{
-          res.json(gender)
+          res.status(200).json(gender)
       }).catch(error =>{
         console.log(error);
         res.json(error);
@@ -24,7 +24,7 @@ module.exports = {
   index: function(req, res) {
     Gender.findAll()
       .then(genders =>{
-        res.json(genders);
+        res.status(200).json(genders);
       }).catch(error =>{
         console.log(error);
         res.json(error);
@@ -36,7 +36,7 @@ module.exports = {
 
     Gender.create(params)
       .then(gender =>{
-        res.json(gender);
+        res.status(201).json(gender);
       }).catch(error =>{
         console.log(error);
         res.json(error);
@@ -46,7 +46,7 @@ module.exports = {
   destroy: function(req, res){
     Gender.destroy({where:{slug: req.params.slug}})
       .then(result =>{
-        res.json(result);
+        res.status(204).json(result);
       }).catch(error =>{
         console.log(error);
         res.json(error);

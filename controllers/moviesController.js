@@ -16,7 +16,7 @@ module.exports = {
       include:['genders']
     }).then(movie =>{
         req.movieId = movie.id
-        res.json(movie);
+        res.status(200).json(movie);
       }).catch(error =>{
         console.log(error);
         res.json(error)
@@ -26,7 +26,7 @@ module.exports = {
   index: function(req, res){
     Movie.findAll()
       .then(movies =>{
-        res.json(movies)
+        res.status(200).json(movies)
       }).catch(error =>{
         console.log(error);
         res.json(error)
@@ -40,7 +40,7 @@ module.exports = {
     Movie.create(params)
       .then(movie =>{
         movie.addGenders(gendersIds);
-        res.json(movie);
+        res.status(201).json(movie);
       }).catch(error =>{
         console.log(error);
         res.json(error)
@@ -50,21 +50,10 @@ module.exports = {
   destroy: function(req, res){
     Movie.destroy({where:{slug: req.params.slug}})
       .then(movie =>{
-        res.json(movie)
+        res.status(204)
       }).catch(error =>{
         console.log(error);
         res.json(error)
       })
   }
 }
-
-/**
- * 
- * task.save().then(()=>{
-                let categoriesIds = req.body.checkCate;
-                task.addCategories(categoriesIds)
-                .then(()=>{
-                    res.redirect(`/tasks/${task.id}`);
-                })
-            })
- */

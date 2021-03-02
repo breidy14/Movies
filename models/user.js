@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
-      default: false,
+      defaultValue: false,
       allowNull: false
     },
     passwordHash: {
