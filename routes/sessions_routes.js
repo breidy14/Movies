@@ -8,6 +8,7 @@ router.route('/signin')
   sessionsController.generateToken,
   sessionsController.sendToken);
   
+router.route('/signup').post(sessionsController.signup);
 router.route('/logout').delete(sessionsController.logout);
 
 

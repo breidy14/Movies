@@ -7,7 +7,13 @@ const validParams = ['email','name', 'lastName','password'];
 
 
 module.exports = {
-  index: function(req, res){
+  find: function(req, res){
+    User.findOne({where:{id: req.fullUser},attributes: ['name', 'lastName','email']})
+      .then(user =>{
+        res.status(200).json(user);
+      }).catch(error=>{
+        res.status(404).json(error);
+      })
   },
   create: function(req, res){
     let params = paramsBuilder(validParams, req.body)

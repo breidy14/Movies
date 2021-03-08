@@ -1,20 +1,20 @@
-const Gender = require('../models').Gender;
+const Role = require('../models').Role;
 const paramsBuldier = require('./helpers').paramsBuilder;
 const validParams = ['name']
 
 module.exports = {
   find: async function(req, res){
       
-      let genderId = await Gender.findOne({where:{slug: req.params.slug}}).catch(error=>{console.log(error);});
+      let roleId = await Role.findOne({where:{slug: req.params.slug}}).catch(error=>{console.log(error);});
 
-      if (!genderId) {
-        res.status(404).json({error:"Generó no encontrado"})
+      if (!roleId) {
+        res.json({error:"Rol invalido"})
       }
       
-      Gender.findByPk(genderId.id,{
-        include:['movies']
-      }).then((gender)=>{
-          res.status(200).json(gender)
+      Role.findByPk(roleId.id,{
+        include:['users']
+      }).then((role)=>{
+          res.status(200).json(role)
       }).catch(error =>{
         console.log(error);
         res.status(404).json(error);
@@ -22,9 +22,9 @@ module.exports = {
   },
 
   index: function(req, res) {
-    Gender.findAll()
-      .then(genders =>{
-        res.status(200).json(genders);
+    Role.findAll()
+      .then(roles =>{
+        res.status(200).json(roles);
       }).catch(error =>{
         console.log(error);
         res.status(404).json(error);
@@ -34,9 +34,9 @@ module.exports = {
   create: function(req,res){
     let params = paramsBuldier(validParams, req.body);
 
-    Gender.create(params)
-      .then(gender =>{
-        res.status(201).json(gender);
+    Role.create(params)
+      .then(role =>{
+        res.status(201).json(role);
       }).catch(error =>{
         console.log(error);
         res.json(error);
@@ -44,7 +44,7 @@ module.exports = {
   },
 
   destroy: function(req, res){
-    Gender.destroy({where:{slug: req.params.slug}})
+    Role.destroy({where:{slug: req.params.slug}})
       .then(result =>{
         res.status(204).json(result);
       }).catch(error =>{

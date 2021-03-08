@@ -15,11 +15,11 @@ module.exports = {
     Movie.findByPk(movieId.id,{
       include:['genders']
     }).then(movie =>{
-        req.movieId = movie.id
+        req.movieId = movie.id;
         res.status(200).json(movie);
       }).catch(error =>{
         console.log(error);
-        res.json(error)
+        res.status(404).json(error);
       })
   },
 
@@ -29,14 +29,13 @@ module.exports = {
         res.status(200).json(movies)
       }).catch(error =>{
         console.log(error);
-        res.json(error)
+        res.status(404).json(error);
       })
   },
 
   create: function(req, res){
     let params = paramsBuldier(validParams, req.body);
     let gendersIds = req.body.genders.split(',');
-    console.log(gendersIds);
     Movie.create(params)
       .then(movie =>{
         movie.addGenders(gendersIds);

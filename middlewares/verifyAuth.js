@@ -12,8 +12,9 @@ const auth = async(req, res, next) => {
   try {
       const user = await User.findByPk(data.id);
       if (!user) res.status(404).json({message: "Usuario no encontrado"})
+      
       user.passwordHash = 0;
-      req.fullUser = user;
+      req.fullUser = user.id;
 
       next();
   } catch (error) {

@@ -30,7 +30,13 @@ module.exports = (sequelize, DataTypes) => {
     }
     
     static associate(models) {
-        // define association here
+      User.belongsToMany(models.Role, {
+        through: 'UserRoles', 
+        as: 'roles', 
+        foreignKey:'idRole',
+        onDelete:'CASCADE',
+        onUpdate: 'CASCADE'
+      })
     }
   };
   User.init({
@@ -46,11 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
-    },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      allowNull: false
     },
     passwordHash: {
       type: DataTypes.STRING,
@@ -71,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: "User",
   });
 
-  User.beforeCreate((user,options)=>{
+  User.beforeCreate(async (user,options)=>{
     return new Promise((res,rej)=>{
       if(user.password){
         bcrypt.hash(user.password, 10, function(error,hash){
@@ -83,3 +84,4 @@ module.exports = (sequelize, DataTypes) => {
   });
   return User;
 };
+
