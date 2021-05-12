@@ -12,4 +12,3 @@ Los usuarios que tengan rol de moderador pueden realizar el CRUD sobre las pelí
 
 Los usuarios que tengan rol de administrador, tienen los mismos privilegios que los moderadores, y son los únicos que pueden darle o quitarle el rol de moderador a un usuario.
 
-FUNCIONES POR AGREGAR[comentarios, calificación y reacción de los usuarios].
